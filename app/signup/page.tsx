@@ -150,14 +150,14 @@ const SignUp = () => {
           ))}
 
         <div className="relative mt-2">
-          <label className="absolute -top-2 bg-neutral-50 px-1 text-[13px] font-medium text-purple-600 flex items-center gap-1">
+          <label className="absolute -top-2 bg-neutral-50 px-1 text-[13px] font-medium text-purple-600 flex items-center">
             Are you an Agency?<span className="text-red-500">*</span>
           </label>
-          <div className="flex gap-4 mt-3">
+          <div className="flex gap-4 mt-4">
             {["yes", "no"].map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-2 text-black"
+                className="flex items-center gap-2 text-black text-sm"
               >
                 <input
                   type="radio"
@@ -165,7 +165,7 @@ const SignUp = () => {
                   value={option}
                   checked={formData.isAgency === option}
                   onChange={(e) => handleChange(e, "isAgency")}
-                  className="w-4 h-4 border-gray-300"
+                  className="w-4 h-4 border-gray-300 mr-2"
                 />
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </label>
