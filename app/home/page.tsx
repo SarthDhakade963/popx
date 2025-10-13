@@ -15,7 +15,7 @@ const Home = () => {
 
       <div className="flex flex-col">
         <button
-          className="mb-2 w-[98%] h-[50px] rounded-[10px] bg-purple-700 text-md font-bold "
+          className="mb-2 w-[98%] h-[50px] rounded-[10px] bg-purple-700 text-md font-bold cursor-pointer"
           onClick={() => router.push("/signup")}
         >
           Create Account
