@@ -94,8 +94,6 @@ const SignUp = () => {
     fields.forEach((field) => {
       const value = formData[field.id];
 
-      localStorage.setItem("fullName", formData.fullName);
-
       if (field.required && !value) {
         valid = false;
         newErrors[field.id] = `${field.label} is required`;
@@ -130,6 +128,7 @@ const SignUp = () => {
 
       existingUsers.push(newUser);
       localStorage.setItem("users", JSON.stringify(existingUsers));
+      localStorage.setItem("currentUser", JSON.stringify(newUser));
 
       console.log("Form Submitted!", formData);
       router.push("/profile");
