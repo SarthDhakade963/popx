@@ -1,4 +1,5 @@
 "use client";
+import { User } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -7,13 +8,22 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const handleLogin = () => {
-    // Save data to localStorage (you could also use sessionStorage)
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-    // Navigate to profile page
-    router.push("/profile");
+    const user = users.find(
+      (u: User) => u.email === email && u.password === password
+    );
+
+    if (user) {
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
+      router.push("/profile");
+    } else {
+      alert("Invalid email or password. Please sign up first.");
+      router.push("/signup");
+    }
   };
+
   return (
     <div className="flex flex-col h-full gap-3 p-6">
       <h1 className="text-black text-2xl font-bold">

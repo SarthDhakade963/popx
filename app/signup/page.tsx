@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface FormData {
@@ -64,6 +65,7 @@ const fields = [
 ];
 
 const SignUp = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>(
     fields.reduce((acc, field) => ({ ...acc, [field.id]: "" }), {})
   );
@@ -92,6 +94,8 @@ const SignUp = () => {
     fields.forEach((field) => {
       const value = formData[field.id];
 
+      localStorage.setItem("fullName", formData.fullName);
+
       if (field.required && !value) {
         valid = false;
         newErrors[field.id] = `${field.label} is required`;
@@ -106,7 +110,31 @@ const SignUp = () => {
     setErrors(newErrors);
 
     if (valid) {
+      // ✅ Get existing users from localStorage
+      const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
+
+      // ✅ Check if email already exists
+      const userExists = existingUsers.some(
+        (user: FormData) => user.email === formData.email
+      );
+
+      if (userExists) {
+        alert("Account already exists with this email. Please log in.");
+        router.push("/login");
+        return;
+      }
+
+      const newUser = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      existingUsers.push(newUser);
+      localStorage.setItem("users", JSON.stringify(existingUsers));
+
       console.log("Form Submitted!", formData);
+      router.push("/profile");
     }
   };
 

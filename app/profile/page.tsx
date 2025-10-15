@@ -1,16 +1,16 @@
 "use client";
+import { User } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const ProfilePage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [fullName, setFullName] = useState<string>("");
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("email");
-    if (savedEmail) setEmail(savedEmail);
 
-    const savedName = localStorage.getItem("fullName");
-    if (savedName) setFullName(savedName);
+const ProfilePage = () => {
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("currentUser");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
   }, []);
   return (
     <div className="h-full p-6">
@@ -50,8 +50,8 @@ const ProfilePage = () => {
         </div>
 
         <div className="flex flex-col">
-          <div className="text-black font-medium">{fullName}</div>
-          <div className="text-gray-600 text-sm">{email}</div>
+          <div className="text-black font-medium">{user && user.fullName}</div>
+          <div className="text-gray-600 text-sm">{user && user.email}</div>
         </div>
       </div>
 
