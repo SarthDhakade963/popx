@@ -110,10 +110,8 @@ const SignUp = () => {
     setErrors(newErrors);
 
     if (valid) {
-      // ✅ Get existing users from localStorage
       const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
 
-      // ✅ Check if email already exists
       const userExists = existingUsers.some(
         (user: FormData) => user.email === formData.email
       );
